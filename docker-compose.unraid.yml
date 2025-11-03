@@ -12,13 +12,19 @@ services:
     volumes:
       # Map to Unraid appdata directory
       - /mnt/user/appdata/youtube-archiver/postgres:/var/lib/postgresql/data
+    ports:
+      - "5433:5432"  # Changed to avoid port conflicts
 
   backend:
     volumes:
       # Map to a larger storage location for videos (e.g., your media share)
       - /mnt/user/media/YouTube Archive:/data/videos
-
-  # Optional: If you want to use a different port on Unraid
-  frontend:
     ports:
-      - "8080:80"  # Change 8080 to your preferred port
+      - "3002:3001"  # Changed to avoid port 3001 conflict
+
+  frontend:
+    build:
+      args:
+        REACT_APP_API_URL: http://localhost:3002  # Updated to match new backend port
+    ports:
+      - "8080:80"  # Web interface on port 8080
