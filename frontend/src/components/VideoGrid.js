@@ -14,11 +14,12 @@ function VideoGrid() {
   const navigate = useNavigate();
 
   const search = searchParams.get('search') || '';
+  const searchIn = searchParams.get('searchIn') || 'all';
   const page = parseInt(searchParams.get('page') || '1');
 
   useEffect(() => {
     loadVideos();
-  }, [search, page]);
+  }, [search, searchIn, page]);
 
   const loadVideos = async () => {
     setLoading(true);
@@ -28,6 +29,7 @@ function VideoGrid() {
           page,
           limit: 20,
           search,
+          searchIn,
           sortBy: 'upload_date',
           order: 'DESC'
         }
@@ -45,8 +47,19 @@ function VideoGrid() {
   const handlePageChange = (newPage) => {
     const params = new URLSearchParams();
     if (search) params.set('search', search);
+    if (searchIn !== 'all') params.set('searchIn', searchIn);
     params.set('page', newPage);
     navigate(`/?${params.toString()}`);
+  };
+
+  const getSearchInLabel = () => {
+    const labels = {
+      all: 'all content',
+      title: 'titles',
+      description: 'descriptions',
+      comments: 'comments'
+    };
+    return labels[searchIn] || 'all content';
   };
 
   const formatDuration = (seconds) => {
@@ -95,7 +108,7 @@ function VideoGrid() {
     <div className="video-grid-container">
       {search && (
         <div className="search-info">
-          Search results for "{search}" - {pagination?.totalCount || 0} videos found
+          Search results for "{search}" in <strong>{getSearchInLabel()}</strong> - {pagination?.totalCount || 0} videos found
         </div>
       )}
 

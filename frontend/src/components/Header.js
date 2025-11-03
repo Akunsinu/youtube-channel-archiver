@@ -7,13 +7,14 @@ const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:3001';
 
 function Header() {
   const [searchQuery, setSearchQuery] = useState('');
+  const [searchIn, setSearchIn] = useState('all');
   const [isSyncing, setIsSyncing] = useState(false);
   const navigate = useNavigate();
 
   const handleSearch = (e) => {
     e.preventDefault();
     if (searchQuery.trim()) {
-      navigate(`/?search=${encodeURIComponent(searchQuery)}`);
+      navigate(`/?search=${encodeURIComponent(searchQuery)}&searchIn=${searchIn}`);
     }
   };
 
@@ -41,6 +42,16 @@ function Header() {
 
       <div className="header-center">
         <form className="search-form" onSubmit={handleSearch}>
+          <select
+            className="search-filter"
+            value={searchIn}
+            onChange={(e) => setSearchIn(e.target.value)}
+          >
+            <option value="all">All</option>
+            <option value="title">Titles</option>
+            <option value="description">Descriptions</option>
+            <option value="comments">Comments</option>
+          </select>
           <input
             type="text"
             className="search-input"
