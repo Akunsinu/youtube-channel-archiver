@@ -1,0 +1,32 @@
+# Environment variables
+.env
+
+# Node modules
+node_modules/
+
+# Build outputs
+frontend/build/
+dist/
+
+# Logs
+*.log
+logs/
+npm-debug.log*
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Docker volumes (if mounted locally)
+postgres_data/
+video_data/
+
+# Temporary files
+*.tmp
+.cache/

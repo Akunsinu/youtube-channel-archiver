@@ -1,0 +1,24 @@
+# Docker Compose Override for Unraid
+# This file provides Unraid-specific volume mappings
+#
+# Usage:
+#   1. Edit the paths below to match your Unraid setup
+#   2. Deploy with: docker-compose -f docker-compose.yml -f docker-compose.unraid.yml up -d
+
+version: '3.8'
+
+services:
+  postgres:
+    volumes:
+      # Map to Unraid appdata directory
+      - /mnt/user/appdata/youtube-archiver/postgres:/var/lib/postgresql/data
+
+  backend:
+    volumes:
+      # Map to a larger storage location for videos (e.g., your media share)
+      - /mnt/user/media/YouTube Archive:/data/videos
+
+  # Optional: If you want to use a different port on Unraid
+  frontend:
+    ports:
+      - "8080:80"  # Change 8080 to your preferred port
