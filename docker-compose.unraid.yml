@@ -20,11 +20,11 @@ services:
       # Map to a larger storage location for videos (e.g., your media share)
       - /mnt/user/media/YouTube Archive:/data/videos
     ports:
-      - "3002:3001"  # Changed to avoid port 3001 conflict
+      - "3050:3001"  # Changed to port 3050 to avoid conflicts
 
   frontend:
     build:
       args:
-        REACT_APP_API_URL: http://localhost:3002  # Updated to match new backend port
+        REACT_APP_API_URL: http://localhost:3050  # Updated to match new backend port
     ports:
       - "8080:80"  # Web interface on port 8080
